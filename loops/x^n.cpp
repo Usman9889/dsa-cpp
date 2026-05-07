@@ -9,5 +9,4 @@ int main() {
         factorial = factorial *i;
     }
     cout << factorial;
- 
 }

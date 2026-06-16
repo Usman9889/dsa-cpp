@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+    int n;
+    long long m;
+    cin >> n >> m;
+    int a[n];
+    for (int i = 0; i <= n - 1; i++) {
+        cin >> a[i];
+
+    }
+    // long long ans = a[0];
+    bool flag = false;
+    for (int i = 0; i <= n - 1; i++) {
+        if (a[i] == m) {
+            flag = true;
+        }
+    }
+    if (flag == true) {
+        cout << "YES" << endl;
+    }
+    else {
+        cout << "NO" << endl;
+    }
+
+}

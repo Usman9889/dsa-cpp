@@ -21,10 +21,10 @@ int main() {
     for (int i = d; i < n; i++) {
         a[i - d] = a[i];
     }
-    int i = 0;
-    for (int j = n - d; j < n; j++) {
-        a[j] = temp[i];
-        i++;
+
+    for (int i = n - d; i < n; i++) {
+        a[i] = temp[i - (n - d)];
+
     }
     for (int i = 0; i < n; i++) {
         cout << a[i] << " ";

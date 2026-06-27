@@ -1,7 +1,6 @@
 // Approaches:(For Brute Force use any sorting algorithm)
-// 1. Better
+// 2. Better
 #include <bits/stdc++.h>
-
 using namespace std;
 
 int main() {
@@ -31,5 +30,37 @@ int main() {
     }
     for (int x: a)
         cout << x << " ";
+
+}
+// 3.Optimal
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    int a[n];
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    int low = 0, mid = 0, high = n - 1;
+
+    while (mid <= high)
+    {
+        if (a[mid] == 0) {
+            swap(a[mid], a[low]);
+            low++;
+            mid++;
+        } else if (a[mid] == 1) {
+            mid++;
+        } else {
+            swap(a[mid], a[high]);
+            high--;
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        cout << a[i] << " ";
+    }
 
 }

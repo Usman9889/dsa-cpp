@@ -25,11 +25,15 @@ void merge(vector<int> &arr, int low, int mid, int high){
                   arr[i] = temp[i - low];
             }
       
-      //printing temp array
-      for(int i = 0; i < temp.size(); i++){
-            cout << temp[i] << " ";
+      //printing sorted array
+      if(low == 0 && high == arr.size() - 1){
+            cout << "Sorted array: ";
+            for(int i = 0; i < arr.size(); i++){
+                  cout << arr[i] << " ";
+            }
+            cout << endl;
       }
-      cout << endl;
+      
 }
 
 void mergeSort(vector<int> &arr, int low, int high){

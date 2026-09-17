@@ -1,76 +1,86 @@
-
 #include <bits/stdc++.h>
 using namespace std;
 
-void merge(vector<int> &arr, int low, int mid, int high) {
-    vector<int> temp; // temporary array
-    int left = low;      // starting index of left half of arr
-    int right = mid + 1;   // starting index of right half of arr
+// Function to merge two halves and count inversions
+int merge(vector<int> &arr, int low, int mid, int high) {
+    // Temporary array to store merged elements
+    vector<int> temp;
 
-    //storing elements in the temporary array in a sorted manner//
+    // Starting index of left half
+    int left = low;
+    // Starting index of right half
+    int right = mid + 1;
 
+    // Variable to count inversions
+    int cnt = 0;
+
+    // Merge elements in sorted order and count inversions
     while (left <= mid && right <= high) {
         if (arr[left] <= arr[right]) {
             temp.push_back(arr[left]);
             left++;
-        }
-        else {
+        } else {
             temp.push_back(arr[right]);
+            cnt += (mid - left + 1); // All remaining left elements are inversions
             right++;
         }
     }
 
-    // if elements on the left half are still left //
-
+    // If left half still has elements
     while (left <= mid) {
         temp.push_back(arr[left]);
         left++;
     }
 
-    //  if elements on the right half are still left //
+    // If right half still has elements
     while (right <= high) {
         temp.push_back(arr[right]);
         right++;
     }
 
-    // transfering all elements from temporary to arr //
+    // Copy back to original array
     for (int i = low; i <= high; i++) {
         arr[i] = temp[i - low];
     }
-}
 
-int countPairs(vector<int> &arr, int low, int mid, int high) {
-    int right = mid + 1;
-    int cnt = 0;
-    for (int i = low; i <= mid; i++) {
-        while (right <= high && arr[i] > 2 * arr[right]) right++;
-        cnt += (right - (mid + 1));
-    }
+    // Return inversion count
     return cnt;
 }
 
+// Merge sort function that counts inversions
 int mergeSort(vector<int> &arr, int low, int high) {
+    // Variable to store inversion count
     int cnt = 0;
+
+    // Base case
     if (low >= high) return cnt;
-    int mid = (low + high) / 2 ;
-    cnt += mergeSort(arr, low, mid);  // left half
-    cnt += mergeSort(arr, mid + 1, high); // right half
-    cnt += countPairs(arr, low, mid, high); //Modification
-    merge(arr, low, mid, high);  // merging sorted halves
+
+    int mid = (low + high) / 2;
+
+    // Count inversions in left half
+    cnt += mergeSort(arr, low, mid);
+    // Count inversions in right half
+    cnt += mergeSort(arr, mid + 1, high);
+    // Count inversions during merge
+    cnt += merge(arr, low, mid, high);
+
     return cnt;
 }
 
-int team(vector <int> & skill, int n)
-{
-    return mergeSort(skill, 0, n - 1);
+// Function to get number of inversions
+int numberOfInversions(vector<int>& a, int n) {
+    return mergeSort(a, 0, n - 1);
 }
 
-int main()
-{
-    vector<int> a = {4, 1, 2, 3, 1};
-    int n = 5;
-    int cnt = team(a, n);
-    cout << "The number of reverse pair is: "
-         << cnt << endl;
+int main() {
+    // Input array
+    vector<int> a = {5, 4, 3, 2, 1};
+    int n = a.size();
+
+    // Count inversions
+    int cnt = numberOfInversions(a, n);
+
+    cout << "The number of inversions are: " << cnt << endl;
+
     return 0;
 }

@@ -1,109 +1,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Class containing Pascal's Triangle generation logic
-class Solution {
-public:
-    // Function to generate Pascal's Triangle up to numRows
-    vector<vector<int>> generate(int numRows) {
-        // Result vector to hold all rows
-        vector<vector<int>> triangle;
-
-        // Loop for each row
-        for (int i = 0; i < numRows; i++) {
-            // Create a row with size (i+1) and initialize all elements to 1
-            vector<int> row(i + 1, 1);
-
-            // Fill elements from index 1 to i-1 (middle values)
-            for (int j = 1; j < i; j++) {
-                // Each element = sum of two elements above it
-                row[j] = triangle[i - 1][j - 1] + triangle[i - 1][j];
-            }
-
-            // Add current row to the triangle
-            triangle.push_back(row);
-        }
-        return triangle;
-    }
-};
-
-int main() {
-    Solution obj;
-    int n = 5;
-
-    // Generate and print Pascal's Triangle
-    vector<vector<int>> result = obj.generate(n);
-    for (auto &row : result) {
-        for (auto &val : row) cout << val << " ";
-        cout << endl;
-    }
-}
-
-#include <bits/stdc++.h>
-using namespace std;
-
-// Class containing Pascal's Triangle row generation logic
-class Solution {
-public:
-    // Function to generate the Nth row of Pascal's Triangle
-    vector<long long> getNthRow(int N) {
-        // Result vector to store the row
-        vector<long long> row;
-        
-        // First value of the row is always 1
-        long long val = 1;
-        row.push_back(val);
-        
-        // Compute remaining values using the relation:
-        // C(n, k) = C(n, k-1) * (n-k) / k
-        for (int k = 1; k < N; k++) {
-            val = val * (N - k) / k;
-            row.push_back(val);
-        }
-        
-        return row;
-    }
-};
-
-int main() {
-    int N = 5; // Example: 5th row
-    Solution sol;
-    vector<long long> result = sol.getNthRow(N);
-
-    // Print the row
-    for (auto num : result) {
-        cout << num << " ";
-    }
-    return 0;
-}
-
-#include <bits/stdc++.h>
-using namespace std;
-
-// Solution class to find the (r, c) element of Pascal's Triangle
-class Solution {
-public:
-    // Function to compute binomial coefficient (nCr)
-    long long findPascalElement(int r, int c) {
-        // Element is C(r-1, c-1)
+// To find the element at the coordinates (R,C) where R is the row number and C is the Column number.
+// Function to compute binomial coefficient (nCr)
+//Time Complexity: O(r)
+// Space Complexity: O(1)
+long long findPascalElement(int r, int c) {
+        // Element is C(r-1, c-1) 
         int n = r - 1;
         int k = c - 1;
-
-        long long result = 1;
-
-        // Compute C(n, k) using iterative formula
-        for (int i = 0; i < k; i++) {
-            result *= (n - i);
-            result /= (i + 1);
+        int val = 1;
+        for(int i = 0; i < k; i++){
+            val = val * (n-i)/(i+1);
         }
-
-        return result;
+        return val;
     }
-};
+//To print the Nth row of the pascal triangle
+vector<long long> printNthRow(int n){
+    vector<long long> row;
+    long long val = 1;
+    row.push_back(val);
 
-int main() {
-    Solution sol;
+    for(int i=1; i<n; i++){
+        val = val * (n-i)/i;
+        row.push_back(val);
+    }
+    return row;
+}
+int main(){
     int r = 5, c = 3;
-    cout << sol.findPascalElement(r, c);
-    return 0;
+    int ans = findPascalElement(r,c);
+    cout << ans;
+
+    // To print the Nth row of the pascal triangle
+    int n = 5;
+    vector<long long> result = printNthRow(n);
+    for(auto x : result){
+        cout << x <<" ";
+    }
 }

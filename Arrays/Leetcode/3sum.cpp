@@ -51,13 +51,43 @@ vector<vector<int>> Better(vector<int>& arr, int n){
     return vector<vector<int>>(ans.begin(), ans.end()); 
 }
 
-
+// Optimal Approach(2 pointers)
+// Time complexity:  O(NlogN)+O(N^2)
+// Space complexity:O(no. of quadruplets), This space is only used to store the answer. We are not using any extra space to solve this problem. So, from that perspective, space complexity can be written as O(1).
+vector<vector<int>> Optimal(vector<int>& arr, int n){
+     sort(arr.begin(), arr.end());
+     
+     vector<vector<int>> ans;
+     
+     for(int i=0; i<n; i++){
+         // Skip duplicates for first element
+         if(i > 0 && arr[i] == arr[ i-1]) continue;
+         
+         int left = i+1, right = n-1;
+         
+         while(left < right){
+             int sum = arr[i] + arr[left] + arr[right];
+             
+             if(sum == 0){
+                 ans.push_back({arr[i], arr[left], arr[right]});
+                 left++;
+                 right--;
+                 // Skip duplicates for left
+                 while(left < right && arr[left] == arr[left - 1]) left++;
+                 while(left < right && arr[right] == arr[right + 1]) right++;
+             }
+             else if( sum < 0) left++;
+             else right--;
+         }
+     }
+     return ans;
+}
 int main() {
 	vector<int> arr = {-1, 0, 1, 2, -1, -4};
     int n = arr.size();
     vector<vector<int>> ans = BruteForce(arr, n);
     vector<vector<int>> ans2 = Better(arr, n);
-   
+    vector<vector<int>> ans3 = Optimal(arr, n);
     for(auto &it : ans){
         for(auto &x : it){
             cout << x << " ";

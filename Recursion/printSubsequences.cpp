@@ -1,6 +1,5 @@
 #include<bits/stdc++.h>
 using namespace std;
-
 void printSubsequences(int index, vector<int> arr, vector<int> current ){
       //base case
       if(index == arr.size()){
@@ -13,7 +12,7 @@ void printSubsequences(int index, vector<int> arr, vector<int> current ){
       //Pick the current element
       current.push_back(arr[index]);
       printSubsequences(index + 1, arr, current);
-
+      
       //Backtrack: remove the current element
       current.pop_back();
 
